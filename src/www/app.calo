@@ -1,0 +1,881 @@
+Ejecutable como documento HTML5
+    con autor allnulled
+    con nombre app-por-defecto
+    con versión 0.0.1
+<head>
+    <title>Módulos Calo progresivos</title>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="components/estilos.css" />
+    <style>
+      .w_100 { width: 100%; }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante {
+          position: fixed;
+          top: 2px;
+          bottom: 2px;
+          left: 2px;
+          right: 2px;
+          background-color: rgba(0,0,0,0.2)
+      }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante .tabla_para_dialogos {
+          display: table;
+          width: 100%;
+          height: 100%;
+      }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante .tabla_para_dialogos > tbody {
+      }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante .tabla_para_dialogos > tbody > tr {
+      }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante .tabla_para_dialogos > tbody > tr > td {
+          vertical-align: middle;
+          text-align: center;
+      }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante .tabla_para_dialogos > tbody > tr > td > .caja_de_dialogo {
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+          min-width: 120px;
+          min-height: 120px;
+          max-width: 420px;
+      }
+      .PuertoDeDialogosDeCastelog .capa_bloqueante .tabla_para_dialogos > tbody > tr > td > .caja_de_dialogo > .window::before {
+        left: 0 !important;
+        right: 0 !important;
+      }
+      .nopadding {
+        padding: 0px !important;
+      }
+      .texto_compacto {
+        white-space: nowrap;
+      }
+      .contenido_de_ventanuco {
+        border: 1px solid #333;
+        border-top: none;
+        padding: 2px;
+        background: linear-gradient(90deg,hsla(0,0%,100%,.4),rgba(0,0,0,.1),hsla(0,0%,100%,.2)),linear-gradient(55deg,transparent,rgba(0,0,0,.1) 20%,rgba(0,0,0,.1) 50%,transparent 53%),#4580c4;
+        box-shadow: inset 0 0 .5px .5px #fff;
+      }
+      .ventanita_de_ficheros {
+        height: 80px;
+        overflow: scroll;
+        border: 1px solid #c0c1cd;
+        box-shadow: 4px 4px 3px -2px #999;
+        resize: vertical;
+        padding: 2px;
+      }
+      button {
+        overflow: hidden;
+      }
+    </style>
+</head>
+<body><div id="app"></div></body>.
+
+importo api nativa.
+
+creo HOOKS como {
+  de_agregar_tal: una función,
+  de_agregar_cual: una función,
+  de_agregar_pascual: una función
+}.
+
+##*
+hago una inserción de hook global llamado "x" con evento como HOOKS.de_agregar_tal configurado con {}.
+hago una actualización de hook global llamado "x" con evento como HOOKS.de_agregar_cual en lugar de evento HOOKS.de_agregar_tal.
+hago una eliminación de hook global llamado "x" con evento como HOOKS.de_agregar_tal.
+hago una eliminación de hook global llamado "x".
+hago una ejecución de hook global llamado "x".
+creo x_hooks como un hook global llamado "x".
+*##
+
+creo PuertoDeDialogosDeCastelog como un componente vue2 con nombre "PuertoDeDialogosDeCastelog" con plantilla {
+  <div class="PuertoDeDialogosDeCastelog Component">
+    <div class="capa_bloqueante" v-if="dialogos.length">
+      <table class="tabla_para_dialogos">
+        <template v-for="dialogo, dialogo_index in dialogos">
+          <tbody v-if="dialogo_index === 0" v-bind:key="'puerto-de-dialogos-de-castelog-' + dialogo_index">
+            <tr>
+              <td>
+                <div class="caja_de_dialogo">
+                  <div class="window active" style="text-align: left;">
+                    <div class="title-bar">
+                      <div class="title-bar-text">{{ dialogo.titulo }}</div>
+                      <div class="title-bar-controls">
+                        <button aria-label="Close" v-if="(!dialogo.opciones) || dialogo.opciones.es_cerrable" v-on:click="() => cerrar_dialogo_actual()"></button>
+                      </div>
+                    </div>
+                    <div class="window-body has-space" v-if="dialogo.componente in $window.vue.options.components" style="text-align: center;">
+                      <component :is="dialogo.componente" v-bind="dialogo.argumentos" />
+                    </div>
+                    <div class="window-body has-space" v-else style="text-align: center;">
+                      {{ dialogo.componente }}
+                    </div>
+                    <div class="status-bar">
+                      <p class="status-bar-field" v-if="dialogos.length > 1">⚠️ Hay {{ dialogos.length }} avisos pendientes.</p>
+                      <p class="status-bar-field" v-else>⚠️ Sólo hay este aviso pendiente.</p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </table>
+    </div>
+  </div>
+} con lógica {
+    retorno {
+        método data donde {
+            retorno {
+                dialogos: []
+            }.
+        }.
+        propiedad methods como {
+            abrir_dialogo: una función con (titulo, componente o en su defecto undefined, argumentos_parametro o en su defecto {}, opciones_parametro o en su defecto {es_cerrable: true}) {
+                creo opciones como {} extendido por {es_cerrable:true} también extendido por opciones_parametro.
+                creo argumentos como {} extendido por argumentos_parametro.
+                creo promesa como una nueva Promise(una lambda con (ok, fail) donde {
+                  creo acciones_de_dialogo como {}.
+                  asigno acciones_de_dialogo.resolver como una lambda con (datos) donde {
+                    hago this.dialogos.shift().
+                    hago this.$forceUpdate(true).
+                    retorno ok(datos).
+                  }.
+                  asigno acciones_de_dialogo.fallar como una lambda con (error) donde {
+                    hago this.dialogos.shift().
+                    hago this.$forceUpdate(true).
+                    retorno fail(error).
+                  }.
+                  hago argumentos extendido por acciones_de_dialogo.
+                  apendizo {
+                      titulo,
+                      componente,
+                      argumentos,
+                      opciones
+                  } en this.dialogos.
+                  si this.dialogos.length es igual que 1 hago this.$forceUpdate(true).
+                }).
+                retorno promesa.
+            },
+            cerrar_dialogo_actual: una función donde {
+              hago this.dialogos[0].argumentos.resolver(undefined).
+              hago this.dialogos.shift().
+              hago this.$forceUpdate(true).
+            }
+        }.
+        método mounted donde {
+            asigno this.$window.vue.prototype.$dialogos_de_castelog como this.
+        }.
+    }.
+}.
+
+creo ExploradorDeFicherosDeCastelog como un componente vue2 con nombre "ExploradorDeFicherosDeCastelog" con plantilla {
+  <div class="ExploradorDeFicherosDeCastelog Component">
+    <div class="titulo_de_ventanuco" style="padding: 5px;">📁 Ficheros de calo</div>
+    <div class="contenido_de_ventanuco">
+      <div class="horizontal_layout">
+        <button class="boton_minimal" disabled="true">📁</button>
+        <input class="w_100" type="text" v-model="ruta_actual" disabled="true" />
+        <button class="boton_minimal" v-on:click="renombrar_carpeta_actual">✏️</button>
+      </div>
+      <table class="w_100" style="border-collapse:collapse;border:none;">
+        <tbody>
+          <tr>
+            <td style="vertical-align:top; max-width: 100px;">
+              <div class="" style="">
+                <div class="horizontal_layout" style="padding: 1px; padding-left: 0px; padding-right: 0px;">
+                  <input class="w_100" type="text" placeholder="Buscar ficheros rápidamente..." v-model="filtro_de_busqueda_de_ficheros" />
+                  <button v-on:click="filtrar_ficheros_bruto" style="min-width: 25px; padding:2px; margin-left: 1px;">🔎</button>
+                </div>
+                <div style="padding: 2px;">
+                  <div class="ventanita_de_ficheros">
+                    <div v-for="fichero, fichero_index in ficheros_filtrados_por_busqueda" v-bind:key="'fichero-' + fichero_index">
+                      <button class="w_100 texto_compacto" v-on:click="() => ir_a_fichero(fichero)" :class="{active: esta_mostrando_editor_fichero === fichero}">
+                        <span class="texto_compacto" style="float:left;">
+                          {{ fichero.tipo === 'directorio' ? '📁' : '📃' }}
+                          {{ de_ruta_a_nombre(fichero.ruta) }}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button class="w_100 texto_compacto nopadding" v-on:click="reubicar_directorio" :disabled="(!esta_mostrando_editor_fichero) || (esta_mostrando_editor_fichero && (ruta_actual === de_ruta_a_padre(esta_mostrando_editor_fichero.ruta)))">Reubicar</button>
+                </div>
+                <div>
+                  <button class="w_100 texto_compacto nopadding" v-on:click="ir_a_directorio_raiz" :disabled="ruta_actual === '/'">Raíz</button>
+                </div>
+                <div>
+                  <button class="w_100 texto_compacto nopadding" v-on:click="subir_directorio" :disabled="ruta_actual === '/'">Subir</button>
+                </div>
+              </div>
+            </td>
+            <td style="vertical-align:top;" v-if="esta_mostrando_editor_fichero">
+              <div class="w_100 contenido_de_ventanuco" style="">
+                <div>
+                  <div class="horizontal_layout">
+                    <button class="boton_minimal" v-on:click="crear_nuevo_fichero" style="padding-left:4px;padding-right:8px;">
+                      <span class="texto_compacto">➕ 📃</span>
+                    </button>
+                    <input class="w_100" type="text" v-model="esta_mostrando_editor_fichero_nombre" disabled="true" />
+                    <button class="boton_minimal" v-on:click="guardar_fichero_actual" style="padding-left:4px;padding-right:4px;">
+                      <span class="texto_compacto">✔</span>
+                    </button>
+                    <button class="boton_minimal" v-on:click="renombrar_fichero_actual" style="padding-left:4px;padding-right:4px;">
+                      <span class="texto_compacto">✏️</span>
+                    </button>
+                    <button class="boton_minimal" v-on:click="eliminar_fichero_actual" style="padding-left:4px;padding-right:4px;">
+                      <span class="texto_compacto">❌</span>
+                    </button>
+                  </div>
+                </div>
+                <div style="position:relative;">
+                  <textarea class="w_100" style="min-height: 150px;"></textarea>
+                  <div style="position:absolute;bottom:3px;right:3px;" v-if="esta_mostrando_editor_fichero && esta_mostrando_editor_fichero.ruta.endsWith('.calo')">
+                    <button v-on:click="() => $window.alert('compilando')">Compilar</button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="error" class="caja_de_error">
+        <div>{{ error.name }}: {{ error.message }}</div>
+        <div>
+          <details>
+            <summary>Detalles</summary>
+            <div>
+            {{ error.stack }}
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+} con lógica {
+  retorno {
+    método data donde {
+      debugo "ExploradorDeFicherosDeCastelog.data".
+      retorno {
+        esta_mostrando_ficheros: true,
+        esta_mostrando_editor: false,
+        esta_mostrando_editor_fichero: undefined,
+        esta_mostrando_editor_fichero_nombre: "",
+        conexion: undefined,
+        ruta_actual: "/",
+        filtro_de_busqueda_de_ficheros: "",
+        ficheros_bruto: [],
+        ficheros_filtrados_por_directorio_actual: [],
+        ficheros_filtrados_por_busqueda: [],
+        error: undefined
+      }.
+    }.
+    propiedad watch como {
+      método error con (nuevo_valor) donde {
+        debugo "ExploradorDeFicherosDeCastelog.watch.error".
+        hago setTimeout(una lambda donde {
+          asigno this.error como undefined.
+          hago this.$forceUpdate(true).
+        }, 5000).
+      }.
+      método ficheros_bruto con (nuevo_valor) donde {
+        debugo "ExploradorDeFicherosDeCastelog.watch.ficheros_bruto".
+        hago this.filtrar_ficheros_bruto(nuevo_valor).
+      }.
+      método ficheros_filtrados_por_busqueda donde {
+        debugo "ExploradorDeFicherosDeCastelog.watch.ficheros_filtrados_por_busqueda".
+        hago this.$forceUpdate(true).
+      }.
+      método ruta_actual con (nuevo_valor) donde {
+        debugo "ExploradorDeFicherosDeCastelog.watch.ruta_actual".
+        hago this.filtrar_ficheros_bruto().
+      }.
+      método esta_mostrando_editor_fichero con (nuevo_valor) donde {
+        si nuevo_valor es tipo indefinido retorno.
+        debugo "ExploradorDeFicherosDeCastelog.watch.esta_mostrando_editor_fichero".
+        asigno this.esta_mostrando_editor_fichero_nombre como this.de_ruta_a_nombre(nuevo_valor.ruta).
+        hago this.$forceUpdate(true).
+      }.
+    }.
+    propiedad methods como {
+      mostrar_error: una función con (error) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.mostrar_error".
+        asigno this.error como error.
+      },
+      de_ruta_a_padre: una función con (ruta) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.de_ruta_a_padre".
+        creo partes como this.de_ruta_a_partes(ruta).
+        creo ruta_padre como this.de_partes_a_ruta(partes.splice(0, partes.length - 1)).
+        retorno ruta_padre.
+      },
+      de_ruta_a_nombre: una función con (ruta) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.de_ruta_a_nombre".
+        creo partes como this.de_ruta_a_partes(ruta).
+        creo nombre como partes[partes.length - 1].
+        retorno nombre.
+      },
+      de_ruta_a_relativa: una función con (ruta) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.de_ruta_a_relativa".
+        retorno ruta.replace(una nueva RegExp("^\\/","g"), "").replace(una nueva RegExp("\\/\\/+","g"), "/").
+      },
+      de_ruta_a_partes: una función con (ruta) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.de_ruta_a_partes".
+        creo partes como ruta.replace(una nueva RegExp("^\\/","g"), "").replace(una nueva RegExp("\\/\\/+","g"), "/").split(una nueva RegExp("\\/","g")).
+        si (partes.length es igual que 1) y (partes[0] es igual que "") retorno [].
+        retorno partes.
+      },
+      de_partes_a_ruta: una función con (partes) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.de_partes_a_ruta".
+        creo variable ruta como partes.join("/").
+        si no ruta.startsWith("/") {
+          asigno ruta como "/" + ruta.
+        }.
+        retorno ruta.
+      },
+      ir_a_directorio_raiz: una función donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.ir_a_directorio_raiz".
+        asigno this.ruta_actual como "/".
+      },
+      reubicar_directorio: una función donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.reubicar_directorio".
+        si no this.esta_mostrando_editor_fichero lanzo un nuevo Error("No hay fichero seleccionado por el cual reubicarse").
+        asigno this.ruta_actual como this.de_ruta_a_padre(this.esta_mostrando_editor_fichero.ruta).
+      },
+      subir_directorio: una función donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.subir_directorio".
+        creo ruta_por_partes como this.de_ruta_a_partes(this.ruta_actual).
+        si ruta_por_partes.length es igual que 0 retorno false.
+        hago ruta_por_partes.pop().
+        asigno this.ruta_actual como this.de_partes_a_ruta(ruta_por_partes).
+        retorno true.
+      },
+      solo_nombre_de_fichero: una función con (fichero) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.solo_nombre_de_fichero".
+        retorno cuando fichero.ruta es tipo texto entonces this.de_ruta_a_relativa(fichero.ruta.replace(this.ruta_actual, "")) si no fichero.ruta.
+      },
+      abrir_fichero: una función con (fichero) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.abrir_fichero".
+        asigno this.esta_mostrando_editor como true.
+        asigno this.esta_mostrando_editor_fichero como fichero.
+        hago this.$forceUpdate(true).
+      },
+      ir_a_fichero: una función con (fichero) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.ir_a_fichero".
+        si fichero.tipo es igual que "directorio" {
+          asigno this.ruta_actual como fichero.ruta.
+        } y si no {
+          hago this.abrir_fichero(fichero).
+        }.
+      },
+      obtener_conexion: una función asíncrona donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.obtener_conexion".
+        si this.conexion es tipo indefinido asigno this.conexion como asíncronamente RanasDB.connect("castelog_sistema_de_ficheros", [
+          [{fichero: "++id,ruta,contenido,metadatos"}, una función]
+        ]).
+        retorno this.conexion.
+      } en errores {
+        hago this.mostrar_error(error).
+      },
+      juntar_rutas: una función con (...incluyo args) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.juntar_rutas".
+        creo variable ruta como "".
+        desde 0 hasta args.length {
+          creo arg como args[index].
+          si (arg no es igual que "") y (arg no es igual que "/") {
+            si arg.startsWith("/") {
+              incremento ruta en arg.
+            } y si no {
+              incremento ruta en "/" + arg.
+            }.
+          }.
+        }.
+        si no ruta.startsWith("/") asigno ruta como "/" + ruta.
+        retorno ruta.
+      },
+      filtrar_ficheros_bruto: una función  con (nuevo_valor, nueva_ruta o en su defecto this.ruta_actual) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.filtrar_ficheros_bruto".
+        creo todos_los_ficheros como nuevo_valor o this.ficheros_bruto.
+        si todos_los_ficheros no es tipo lista retorno.
+        creo nodos_inmediatos como [].
+        asigno this.ficheros_filtrados_por_directorio_actual como todos_los_ficheros.reduce(una lambda con (salida, fichero) donde {
+          creo esta_bajo_ruta_actual como (fichero.ruta es tipo texto) y fichero.ruta.startsWith(nueva_ruta).
+          creo esta_bajo_ruta_actual_inmediata como (fichero.ruta es tipo texto) y (fichero.ruta.replace(this.ruta_actual, "").indexOf("/") es igual que 0-1).
+          si esta_bajo_ruta_actual y esta_bajo_ruta_actual_inmediata {
+            apendizo fichero en salida.
+          } pero si esta_bajo_ruta_actual y no esta_bajo_ruta_actual_inmediata {
+            creo ruta_en_partes como this.de_ruta_a_partes(fichero.ruta.replace(this.ruta_actual, "")).
+            creo nodo_inmediato como ruta_en_partes[0].
+            si nodo_inmediato no está contenido en nodos_inmediatos {
+              apendizo nodo_inmediato en nodos_inmediatos.
+              si ruta_en_partes.length es mayor que 1 {
+                apendizo {
+                  ruta:this.juntar_rutas(this.ruta_actual, nodo_inmediato),
+                  tipo:"directorio"
+                } en salida.
+              } y si no {
+                apendizo fichero en salida.
+              }.
+            }.
+          }.
+          retorno salida.
+        }, []).
+        creo variable ficheros_finales como undefined.
+        si this.filtro_de_busqueda_de_ficheros y this.filtro_de_busqueda_de_ficheros.length {
+          asigno ficheros_finales como this.ficheros_filtrados_por_directorio_actual filtrado por una lambda con (item) donde {
+            retorno (item textualizado).toLowerCase() contiene valor this.filtro_de_busqueda_de_ficheros.toLowerCase().
+          }.
+        } y si no {
+          asigno ficheros_finales como this.ficheros_filtrados_por_directorio_actual.
+        }.
+        asigno this.ficheros_filtrados_por_busqueda como ficheros_finales.
+      },
+      crear_nuevo_fichero: una función asíncrona donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.crear_nuevo_fichero".
+        si this.$window.vue.options.components no contiene clave "DialogoDeCrearFicheroCalo" {
+          hago un componente vue2 con nombre "DialogoDeCrearFicheroCalo" con plantilla {
+            <div class="DialogoDeCrearFicheroCalo Component">
+              <p style="text-align:left;">Nuevo nombre de fichero:</p>
+              <input class="w_100" type="text" placeholder="/se/permiten/rutas/asi" v-model="nombre" v-on:keypress.enter="() => resolver(nombre)" />
+              <div v-if="error">{{ error.name }}: {{ error.message }}</div>
+              <div class="horizontal_layout" style="margin-top: 5px; padding-top: 5px; border-top: 1px solid #CCC;">
+                <div class="w_100"></div>
+                <button v-on:click="() => resolver()">Cancelar</button>
+                <button style="margin-left: 1px;" v-on:click="() => resolver(nombre)">Crear</button>
+              </div>
+            </div>
+          } con lógica {
+            retorno {
+              método data donde retorno {
+                nombre: this.valorInicial
+              }.
+              propiedad props como {
+                valorInicial: {
+                  propiedad type como String.
+                  propiedad required como true.
+                },
+                error: {
+                  propiedad type como [Error, undefined].
+                  propiedad required como false.
+                },
+                resolver: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                },
+                fallar: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                }
+              }.
+            }.
+          }.
+        }.
+        creo conexion como asíncronamente this.obtener_conexion().
+        creo variable es_valido como false.
+        creo variable nombre_de_fichero_final como undefined.
+        creo variable error_de_dialogo como undefined.
+        en proceso pedir_nombre_de_fichero_valido donde hasta que es_valido {
+          creo parametros_de_dialogo como {} extendido por cuando error_de_dialogo entonces {error: error_de_dialogo} si no {} también extendido por {
+            valorInicial: this.ruta_actual
+          }.
+          creo nuevo_fichero como asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Crear fichero", "DialogoDeCrearFicheroCalo", parametros_de_dialogo).
+          asigno error_de_dialogo como undefined.
+          si nuevo_fichero es tipo indefinido retorno false.
+          si nuevo_fichero.length es igual que 0 continúo proceso pedir_nombre_de_fichero_valido.
+          creo nuevo_fichero_sanitizado como cuando nuevo_fichero.startsWith("/") entonces nuevo_fichero si no ("/" + nuevo_fichero).
+          creo variable existe como false.
+          en proceso buscar_nombre_duplicado donde desde 0 hasta this.ficheros_bruto.length {
+            creo fichero_bruto como this.ficheros_bruto[index].
+            si fichero_bruto.ruta.toLowerCase() es igual que nuevo_fichero_sanitizado.toLowerCase() {
+              asigno existe como true.
+              interrumpo proceso buscar_nombre_duplicado.
+            }.
+          }.
+          si existe {
+            asigno error_de_dialogo como un nuevo Error("El nombre de fichero «" + nuevo_fichero + "» ya existe.").
+            continúo proceso pedir_nombre_de_fichero_valido.
+          } y si no {
+            asigno nombre_de_fichero_final como nuevo_fichero_sanitizado.
+            interrumpo proceso pedir_nombre_de_fichero_valido.
+          }.
+        }.
+        hago asíncronamente conexion.insert("fichero", {ruta: nombre_de_fichero_final, contenido: ""}).
+        hago this.cargar_ficheros().
+      } en errores {
+        hago this.mostrar_error(error).
+      },
+      renombrar_carpeta_actual: una función asíncrona con () donde {
+        si this.$window.vue.options.components no contiene clave "DialogoDeRenombrarCarpetaCalo" {
+          hago un componente vue2 con nombre "DialogoDeRenombrarCarpetaCalo" con plantilla {
+            <div class="DialogoDeRenombrarCarpetaCalo Component">
+              <p style="text-align:left;">Nuevo nombre para carpeta:</p>
+              <input class="w_100" type="text" placeholder="/se/permiten/rutas/asi" v-model="nombre" v-on:keypress.enter="() => resolver(nombre)" />
+              <div v-if="error">{{ error.name }}: {{ error.message }}</div>
+              <div class="horizontal_layout" style="margin-top: 5px; padding-top: 5px; border-top: 1px solid #CCC;">
+                <div class="w_100"></div>
+                <button v-on:click="() => resolver()">Cancelar</button>
+                <button style="margin-left: 1px;" v-on:click="() => resolver(nombre)">Renombrar</button>
+              </div>
+            </div>
+          } con lógica {
+            retorno {
+              método data donde retorno {
+                nombre: this.valorInicial
+              }.
+              propiedad props como {
+                valorInicial: {
+                  propiedad type como String.
+                  propiedad required como true.
+                },
+                error: {
+                  propiedad type como [Error, undefined].
+                  propiedad required como false.
+                },
+                resolver: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                },
+                fallar: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                }
+              }.
+            }.
+          }.
+        }.
+        creo conexion como asíncronamente this.obtener_conexion().
+        creo variable es_valido como false.
+        creo variable nombre_de_carpeta_final como undefined.
+        creo variable error_de_dialogo como undefined.
+        en proceso pedir_nombre_de_carpeta_valido donde hasta que es_valido {
+          creo parametros_de_dialogo como {} extendido por cuando error_de_dialogo entonces {error: error_de_dialogo} si no {} también extendido por {
+            valorInicial: this.ruta_actual
+          }.
+          creo nueva_carpeta como asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Renombrar carpeta", "DialogoDeRenombrarCarpetaCalo", parametros_de_dialogo).
+          asigno error_de_dialogo como undefined.
+          si nueva_carpeta es tipo indefinido retorno false.
+          si nueva_carpeta.length es igual que 0 continúo proceso pedir_nombre_de_carpeta_valido.
+          creo nueva_carpeta_sanitizado como cuando nueva_carpeta.startsWith("/") entonces nueva_carpeta si no ("/" + nueva_carpeta).
+          creo variable existe como false.
+          en proceso buscar_nombre_duplicado donde desde 0 hasta this.ficheros_bruto.length {
+            creo fichero_bruto como this.ficheros_bruto[index].
+            si fichero_bruto.ruta.toLowerCase() es igual que nueva_carpeta_sanitizado.toLowerCase() {
+              asigno existe como true.
+              interrumpo proceso buscar_nombre_duplicado.
+            }.
+          }.
+          si existe {
+            asigno error_de_dialogo como un nuevo Error("El nombre de carpeta «" + nueva_carpeta + "» ya está usándose por un fichero.").
+            continúo proceso pedir_nombre_de_carpeta_valido.
+          } y si no {
+            asigno nombre_de_carpeta_final como nueva_carpeta_sanitizado.
+            interrumpo proceso pedir_nombre_de_carpeta_valido.
+          }.
+        }.
+        creo seleccion_de_subnodos como asíncronamente conexion.select("fichero", una lambda con (item) donde {
+          retorno (item.ruta es tipo texto) y (item.ruta.startsWith(this.ruta_actual)).
+        }).
+        desde 0 hasta seleccion_de_subnodos.length {
+          imprimo "Operación " + index + " de " + seleccion_de_subnodos.length.
+          creo subnodo como seleccion_de_subnodos[index].
+          asigno subnodo.ruta como this.juntar_rutas(nombre_de_carpeta_final, this.de_ruta_a_relativa(subnodo.ruta)).
+          hago asíncronamente conexion.update("fichero", subnodo.id, {ruta: subnodo.ruta}).
+        }.
+        hago this.cargar_ficheros().
+      } en errores {
+        hago this.mostrar_error(error).
+      },
+      guardar_fichero_actual: una función asíncrona con () donde {
+
+      },
+      eliminar_fichero_actual: una función asíncrona con () donde {
+        si this.$window.vue.options.components no contiene clave "DialogoDeEliminarFicheroCalo" {
+          hago un componente vue2 con nombre "DialogoDeEliminarFicheroCalo" con plantilla {
+            <div class="DialogoDeEliminarFicheroCalo Component">
+              <p style="text-align:left;">¿Seguro que quieres eliminar fichero «{{ ruta }}»?</p>
+              <div class="horizontal_layout" style="margin-top: 5px; padding-top: 5px; border-top: 1px solid #CCC;text-align:right;">
+                <div class="w_100"></div>
+                <button v-on:click="() => resolver()">Cancelar</button>
+                <button style="margin-left: 1px;" v-on:click="() => resolver(true)">Eliminar</button>
+              </div>
+            </div>
+          } con lógica {
+            retorno {
+              método data donde retorno {}.
+              propiedad props como {
+                ruta: {
+                  propiedad type como String.
+                  propiedad required como true.
+                },
+                error: {
+                  propiedad type como [Error, undefined].
+                  propiedad required como false.
+                },
+                resolver: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                },
+                fallar: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                }
+              }.
+            }.
+          }.
+        }.
+        creo confirmacion_de_eliminacion como asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Eliminar fichero", "DialogoDeEliminarFicheroCalo", {
+          ruta: this.esta_mostrando_editor_fichero.ruta
+        }).
+        si confirmacion_de_eliminacion es igual que true {
+          hago this.$window.alert("OK!").
+        }.
+      },
+      renombrar_fichero_actual: una función asíncrona con () donde {
+        si this.$window.vue.options.components no contiene clave "DialogoDeRenombrarFicheroCalo" {
+          hago un componente vue2 con nombre "DialogoDeRenombrarFicheroCalo" con plantilla {
+            <div class="DialogoDeRenombrarFicheroCalo Component">
+              <p style="text-align:left;">Nuevo nombre para fichero:</p>
+              <input class="w_100" type="text" placeholder="/se/permiten/rutas/asi.txt" v-model="nombre" v-on:keypress.enter="() => resolver(nombre)" />
+              <div v-if="error">{{ error.name }}: {{ error.message }}</div>
+              <div class="horizontal_layout" style="margin-top: 5px; padding-top: 5px; border-top: 1px solid #CCC;">
+                <div class="w_100"></div>
+                <button v-on:click="() => resolver()">Cancelar</button>
+                <button style="margin-left: 1px;" v-on:click="() => resolver(nombre)">Renombrar</button>
+              </div>
+            </div>
+          } con lógica {
+            retorno {
+              método data donde retorno {
+                nombre: this.valorInicial
+              }.
+              propiedad props como {
+                valorInicial: {
+                  propiedad type como String.
+                  propiedad required como true.
+                },
+                error: {
+                  propiedad type como [Error, undefined].
+                  propiedad required como false.
+                },
+                resolver: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                },
+                fallar: {
+                  propiedad type como Function.
+                  propiedad required como true.
+                }
+              }.
+            }.
+          }.
+        }.
+        creo conexion como asíncronamente this.obtener_conexion().
+        creo variable es_valido como false.
+        creo variable nombre_de_fichero_final como undefined.
+        creo variable error_de_dialogo como undefined.
+        en proceso pedir_nombre_de_fichero_valido donde hasta que es_valido {
+          creo parametros_de_dialogo como {} extendido por cuando error_de_dialogo entonces {error: error_de_dialogo} si no {} también extendido por {
+            valorInicial: this.esta_mostrando_editor_fichero.ruta
+          }.
+          creo nuevo_fichero como asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Renombrar fichero", "DialogoDeRenombrarFicheroCalo", parametros_de_dialogo).
+          asigno error_de_dialogo como undefined.
+          si nuevo_fichero es tipo indefinido retorno false.
+          si nuevo_fichero.length es igual que 0 continúo proceso pedir_nombre_de_fichero_valido.
+          creo nuevo_fichero_sanitizado como cuando nuevo_fichero.startsWith("/") entonces nuevo_fichero si no ("/" + nuevo_fichero).
+          creo variable existe como false.
+          en proceso buscar_nombre_duplicado donde desde 0 hasta this.ficheros_bruto.length {
+            creo fichero_bruto como this.ficheros_bruto[index].
+            si fichero_bruto.ruta.toLowerCase() es igual que nuevo_fichero_sanitizado.toLowerCase() {
+              asigno existe como true.
+              interrumpo proceso buscar_nombre_duplicado.
+            }.
+          }.
+          si existe {
+            asigno error_de_dialogo como un nuevo Error("El nombre de fichero «" + nuevo_fichero + "» ya está usándose por un fichero.").
+            continúo proceso pedir_nombre_de_fichero_valido.
+          } y si no {
+            asigno nombre_de_fichero_final como nuevo_fichero_sanitizado.
+            interrumpo proceso pedir_nombre_de_fichero_valido.
+          }.
+        }.
+        hago asíncronamente conexion.update("fichero", this.esta_mostrando_editor_fichero.id, {ruta: nombre_de_fichero_final}).
+        hago this.cargar_ficheros().
+      } en errores {
+        hago this.mostrar_error(error).
+      },
+      cargar_ficheros: una función asíncrona donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.cargar_ficheros".
+        creo conexion como asíncronamente this.obtener_conexion().
+        creo seleccion como asíncronamente conexion.select("fichero").
+        asigno this.ficheros_bruto como seleccion.
+      } en errores {
+        hago this.mostrar_error(error).
+      },
+      guardar_fichero: una función con (fichero) donde {
+        debugo "ExploradorDeFicherosDeCastelog.methods.guardar_fichero".
+      }
+    }.
+    método mounted donde {
+        debugo "ExploradorDeFicherosDeCastelog.mounted".
+      hago this.cargar_ficheros().
+    }.
+  }.
+}.
+
+creo PaginaDeInicio como un componente vue2 con nombre "PaginaDeInicio" con plantilla {
+  <div class="PaginaDeInicio Component win7">
+    <h3>Módulos Calo progresivos</h3>
+    <p>Este proyecto es para desarrollar módulos de Castelog progresivamente</p>
+    <h4>1. Componente de &lt;PuertoDeDialogosDeCastelog&gt;</h4>
+    <div>
+      <button v-on:click="abrir_dialogo_de_ejemplo_1">Abrir diálogo 1</button>
+      <div v-if="usuario">Bienvenid@, {{ usuario }}</div>
+      <details>
+        <summary>Mostrar código fuente:</summary>
+        <div>
+          <pre>{{ codigo_fuente_1 }}</pre>
+        </div>
+      </details>
+    </div>
+    <h4>2. Componente de &lt;ExploradorDeFicherosDeCastelog&gt;</h4>
+    <div>
+      <ExploradorDeFicherosDeCastelog />
+    </div>
+    <PuertoDeDialogosDeCastelog />
+  </div>
+} con lógica {
+  retorno {
+    método data donde {
+      retorno {
+        usuario: "",
+        codigo_fuente_1: un código en texto donde {si this.$window.vue.options.components no contiene clave "DialogoDeEjemplo1" hago un componente vue2 con nombre "DialogoDeEjemplo1" con plantilla {
+  <div>
+    <h5>Esto es un diálogo personalizado</h5>
+    <div v-if="mensaje">
+      <p>Mensaje: {{ mensaje }}</p>
+    </div>
+    <div v-else>
+      <p>Puedes usar componentes vue2.js dentro del diálogo.</p>
+      <p>Y fácilmente integrar formulario. Y comunicarte con otras instancias de componente que están fuera del diálogo. Por ejemplo:</p>
+    </div>
+    <input class="w_100" type="text" v-model="valor" placeholder="Pon tu nombre aquí." v-on:input="event => huesped.usuario = event.target.value" />
+    <button v-on:click="() => resolver(valor)">Aceptar</button>
+    <button v-on:click="() => resolver(undefined)">Cerrar</button>
+  </div>
+} con lógica {
+  retorno {
+    propiedad props como {
+      mensaje: {
+        propiedad type como String.
+        propiedad default como una función donde retorno "".
+      },
+      huesped: {
+        propiedad type como Object.
+        propiedad required como true.
+      },
+      resolver: {
+        propiedad type como Function.
+        propiedad required como true.
+      },
+      fallar: {
+        propiedad type como Function.
+        propiedad required como true.
+      }
+    }.
+    método data donde {
+      retorno {
+        valor: ""
+      }.
+    }.
+  }.
+}.
+creo respuesta_1 como asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Diálogo de ejemplo 1", "DialogoDeEjemplo1", {huesped:this}).
+        }
+      }.
+    }.
+    propiedad methods como {
+      abrir_dialogo_de_ejemplo_1: una función asíncrona con () donde {
+        si this.$window.vue.options.components no contiene clave "DialogoDeEjemplo1" hago un componente vue2 con nombre "DialogoDeEjemplo1" con plantilla {
+          <div>
+            <h5>Esto es un diálogo personalizado</h5>
+            <div v-if="mensaje">
+              <p>Mensaje: {{ mensaje }}</p>
+            </div>
+            <div v-else>
+              <p>Puedes usar componentes vue2.js dentro del diálogo.</p>
+              <p>Y fácilmente integrar formulario. Y comunicarte con otras instancias de componente que están fuera del diálogo. Por ejemplo:</p>
+            </div>
+            <input class="w_100" type="text" v-model="valor" placeholder="Pon tu nombre aquí." v-on:input="event => huesped.usuario = event.target.value" />
+            <button v-on:click="() => resolver(valor)">Aceptar</button>
+            <button v-on:click="() => resolver(undefined)">Cerrar</button>
+          </div>
+        } con lógica {
+          retorno {
+            propiedad props como {
+              mensaje: {
+                propiedad type como String.
+                propiedad default como una función donde retorno "".
+              },
+              huesped: {
+                propiedad type como Object.
+                propiedad required como true.
+              },
+              resolver: {
+                propiedad type como Function.
+                propiedad required como true.
+              },
+              fallar: {
+                propiedad type como Function.
+                propiedad required como true.
+              }
+            }.
+            método data donde {
+              retorno {
+                valor: ""
+              }.
+            }.
+          }.
+        }.
+        creo respuesta_1 como asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Diálogo de ejemplo 1", "DialogoDeEjemplo1", {huesped:this}).
+        si respuesta_1 es tipo indefinido retorno.
+        hago asíncronamente this.$dialogos_de_castelog.abrir_dialogo("Diálogo de ok", "OK. Entonces acordamos que eres " + respuesta_1 + ". Encantado.").
+        hago asíncronamente una espera de 1 segundos.
+        hago this.$dialogos_de_castelog.abrir_dialogo("Diálogo de ejemplo 2", "DialogoDeEjemplo1", {huesped:this, mensaje: "Mismo componente, pero con otro mensaje, por distintos argumentos"}).
+        hago asíncronamente una espera de 1 segundos.
+        hago this.$dialogos_de_castelog.abrir_dialogo("Diálogo de ejemplo 3", "DialogoDeEjemplo1", {huesped:this, mensaje: "Igual que el anterior."}).
+      } en errores {
+      }
+    }.
+  }.
+}.
+
+creo App como una aplicación vue2 con nombre "App" con rutas [{
+    propiedad path como "/".
+    propiedad name como "Home".
+    propiedad component como PaginaDeInicio.
+    propiedad props como {}.
+}] con traducciones {
+    propiedad es como {}.
+    propiedad en como {}.
+    propiedad ca como {}.
+} con plantilla {
+  <div class="App Component Castelog-app">
+    <router-view></router-view>
+  </div>
+} con estilos {
+    html {}
+    body {}
+    .Component {}
+    .App {}
+} con lógica {
+  retorno {
+    método data donde {
+      retorno {
+        
+      }.
+    }.
+    propiedad methods como {}.
+    propiedad watch como {}.
+    método beforeMount donde {}.
+    método mounted donde {}.
+  }.
+} montada en "#app".

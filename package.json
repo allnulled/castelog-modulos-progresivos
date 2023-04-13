@@ -1,0 +1,12 @@
+{
+  "name": "castelog-modulos-progresivos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx http-server -c-1 src/www"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
